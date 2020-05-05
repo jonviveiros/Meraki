@@ -1,0 +1,11 @@
+Hostname,Serial Number,Port,Description,Mode,VLAN,VoiceVLAN,Allowed VLANS
+['Elevator1-MS220-8P'],['ABCD-EFFE-DCBA'],1,AP Port,trunk,10,,all
+['Elevator1-MS220-8P'],['ABCD-EFFE-DCBA'],2,Camera,access,30,,all
+['Elevator1-MS220-8P'],['ABCD-EFFE-DCBA'],3,,trunk,1,,all
+['Elevator1-MS220-8P'],['ABCD-EFFE-DCBA'],4,,trunk,1,,all
+['Elevator1-MS220-8P'],['ABCD-EFFE-DCBA'],5,,trunk,1,,all
+['Elevator1-MS220-8P'],['ABCD-EFFE-DCBA'],6,Card Reader,access,40,,all
+['Elevator1-MS220-8P'],['ABCD-EFFE-DCBA'],7,Camera,access,30,,all
+['Elevator1-MS220-8P'],['ABCD-EFFE-DCBA'],8,,access,10,,all
+['Elevator1-MS220-8P'],['ABCD-EFFE-DCBA'],9,,trunk,10,,all
+['Elevator1-MS220-8P'],['ABCD-EFFE-DCBA'],10,,trunk,10,,all
