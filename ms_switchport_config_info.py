@@ -1,5 +1,5 @@
 # !/usr/bin/python3
-# JViveiros
+# https://github.com/jonviveiros/Meraki
 
 # DESCRIPTION
 # The goal is to pull switchport information from all switches in a Meraki
