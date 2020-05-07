@@ -1,12 +1,12 @@
-# !/usr/bin/python3
-# https://github.com/jonviveiros/Meraki
+# !/usr/bin/env python3
+# https://github.com/jonviveiros/Meraki/ms_switchport_config_info.py
 
 # DESCRIPTION
 # The goal is to pull switchport information from all switches in a Meraki
 # network and then export to a .csv file. Use printOrgs.py to get net_id
 
 # USAGE
-# python3 exportSwitchportInfo-2.py -k <api_key> -o <org_id> -n <net_id>
+# python ms_switchport_config_info.py -k <api_key> -o <org_id> -n <net_id>
 # arguments -k and -o are required, argument -n is optional
 
 import csv
