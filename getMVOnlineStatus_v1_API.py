@@ -1,61 +1,60 @@
 #! python3
 #
-# DEPRECATED - v0 API calls
-# DEPRECATED - v0 API calls
-# DEPRECATED - v0 API calls
 
 # Created by Victor and J5
 # GNU Public license 3.0
 #
-# rev 1.0 04/23/2021
-# last updated 2021-07-22
+# last updated 2022-11-02
 # Python version: 3.7+
 #
-# getMVOnlineStatus.py - Walks through a Meraki Organization Devices using Meraki API v1.0 and
-#                         creates a list of all Cameras that are online. This list is then written
-#                          into an Excel Document.
+# getMVOnlineStatus_v1_API.py - Walks through a Meraki Organization Devices using Meraki API v1 and
+#                               creates a list of all Cameras that are online. This list is then written
+#                               into an Excel Document.
 #
 # Dependency requirements: meraki library -  #pip3 install meraki
 #                          openpyxl       -  #pip3 install openpyxl
 #                          getpass        -  #pip3 install getpass
 import openpyxl
-from getpass4 import getpass
+from getpass import getpass
 import meraki
+from datetime import datetime
 
 
-def printListOfOrganizations():
+def printlistoforganizations():
     """ This function prints all Orgs the user has access to and asks the user to choose the Org to interact with """
-
     orgs = dashboard.organizations.getOrganizations()
     print("\n You have access to {} organizations: \n ".format(len(orgs)))
     print("{} {:<40} {:<20}\n".format("  ", "Org Name:", "Org ID"))
     for i in range(0, len(orgs)):
-        print("{}. {:<40} {:<20}".format(i+1, orgs[i]['name'], orgs[i]['id']))
+        print("{}. {:<40} {:<20}".format(i + 1, orgs[i]['name'], orgs[i]['id']))
     
     while True:
-
         choice = int(input("Please select what Org you would like to interact with? (number): "))
 
-        if choice > 0 and choice <= len(orgs):
-            print("Preparing -{}- for API interraction...".format(orgs[choice-1]['name']))
-            org_id = orgs[choice-1]['id']
+        if 0 < choice <= len(orgs):
+            print("Preparing ---{}--- for API interraction...".format(orgs[choice - 1]['name']))
+            org_id = orgs[choice - 1]['id']
             break
         else:
             print("You didn't select a valid choice. Please try again.")
-
     return org_id
 
 
 # Main program
 if __name__ == '__main__':
-    print("you've started...")
     # Get admin's meraki API key to access the dashboard and print all Orgs
+    merakiAPIKey = getpass(prompt='Please enter your Dashboard API Key: ')
+
+    timenow = '{:%Y-%m-%d_%H%M%S}'.format(datetime.now())
+
     # merakiAPIKey = input('Please enter your Dashboard API Key: ')
-    merakiAPIKey = getpass('Please enter your Dashboard API Key: ')
-    dashboard = meraki.DashboardAPI(merakiAPIKey)
-    OrgID = printListOfOrganizations()
+    dashboard = meraki.DashboardAPI(merakiAPIKey, suppress_logging=True)
+    # print(dashboard)
+    OrgID = printlistoforganizations()
+    print("This organization's ID # is: ", OrgID)
 
     device_statuses = dashboard.organizations.getOrganizationDevicesStatuses(OrgID, total_pages='all')
+    # print(device_statuses)
     inventory = dashboard.organizations.getOrganizationDevices(OrgID, total_pages='all')
     networks = dashboard.organizations.getOrganizationNetworks(OrgID, total_pages='all')
 
@@ -81,7 +80,6 @@ if __name__ == '__main__':
                                                                 'status': device['status']
                                                                 # ,
                                                                 })
-                                                                # 'qrprofile': qrprofile['profileId']})
                     output_list.append(camera_dict['Camera ' + str(i)])
                     i += 1
 
@@ -105,6 +103,6 @@ if __name__ == '__main__':
         # sheet['F' + str(index + 2)].value = mv_camera['qrprofile']
     
     # Save the scripts Workbook
-    mv_workbook.save('MV_Statuses.xlsx')
+    mv_workbook.save('MV_Statuses ' + timenow + '.xlsx')
 
     print("Done.")
